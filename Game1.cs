@@ -1,5 +1,4 @@
 ﻿using System;
-using MGUI.Controls;
 using MGUI.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +11,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     public static SpriteFont Font;
-    private UIManager _uiManager;
+
 
     public Game1()
     {
@@ -42,52 +41,12 @@ public class Game1 : Game
         AssetLoader.Init(_graphics.GraphicsDevice, Content.Load<SpriteFont>("font"));
     
 
-        new UIManager(_graphics.GraphicsDevice, this.Window);
 
-
-        UIManager.Instance.Add(new Window("Test Window")
-        {
-            Position = new Point(100, 100),
-            Size = new Point(300, 400),
-            BorderColor = Theme.BorderLight,
-            BorderThickness = 1
-        });
-
-        Window _otherWindow = new Window("Other Window")
-        {
-            Position = new Point(500, 100),
-            Size = new Point(300, 400),
-            BorderColor = Theme.BorderLight,
-            BorderThickness = 1            
-        };
-        UIManager.Instance.Add(_otherWindow);
-
-        DropDown _dropDown = new DropDown();
-
-        for (int i = 0; i < 5; i++)
-        {
-            _dropDown.Add(new Button
-            {
-                Name = $"Button:{i}",
-                Text = $"Button:{i}",
-                Size = new Point(150, 30),
-                OnClick = ButtonClick
-            });
-        }
-
-        _otherWindow.Add(_dropDown);
 
 
 
 
     }
-
-    private void ButtonClick(Button button, MouseEvent @event)
-    {
-        Logger.Log(this, button.Text);
-    }
-
-
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
