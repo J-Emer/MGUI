@@ -1,0 +1,36 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# MonoGame / .NET
+bin/
+obj/
+Debug/
+Release/
+*.pdb
+*.cache
+*.mdb
+*.log
+
+# Rider / JetBrains
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# NuGet packages
+*.nupkg
+packages/
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# Other
+*.swp
+*.tmp
