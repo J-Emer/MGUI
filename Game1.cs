@@ -42,10 +42,10 @@ public class Game1 : Game
         AssetLoader.Init(_graphics.GraphicsDevice, Content.Load<SpriteFont>("font"));
     
 
-        _uiManager = new UIManager(_graphics.GraphicsDevice, this.Window);
+        new UIManager(_graphics.GraphicsDevice, this.Window);
 
 
-        _uiManager.Add(new Window("Test Window")
+        UIManager.Instance.Add(new Window("Test Window")
         {
             Position = new Point(100, 100),
             Size = new Point(300, 400),
@@ -60,14 +60,31 @@ public class Game1 : Game
             BorderColor = Theme.BorderLight,
             BorderThickness = 1            
         };
+        UIManager.Instance.Add(_otherWindow);
 
-        _uiManager.Add(_otherWindow);
+        DropDown _dropDown = new DropDown();
+
+        for (int i = 0; i < 5; i++)
+        {
+            _dropDown.Add(new Button
+            {
+                Name = $"Button:{i}",
+                Text = $"Button:{i}",
+                Size = new Point(150, 30),
+                OnClick = ButtonClick
+            });
+        }
+
+        _otherWindow.Add(_dropDown);
+
+
+
 
     }
 
     private void ButtonClick(Button button, MouseEvent @event)
     {
-        Logger.Log(button.Name);
+        Logger.Log(this, button.Text);
     }
 
 
@@ -78,7 +95,7 @@ public class Game1 : Game
 
         // TODO: Add your update logic here
 
-        _uiManager.Update(gameTime);
+        UIManager.Instance.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -89,7 +106,7 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
 
-        _uiManager.Draw();
+        UIManager.Instance.Draw();
 
         base.Draw(gameTime);
     }

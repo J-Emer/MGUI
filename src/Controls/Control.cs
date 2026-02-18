@@ -41,7 +41,7 @@ namespace MGUI.Controls
                 if(_visible != value)
                 {
                     _visible = value;
-                    Logger.Log(this, "Visibility Changed");
+                    Logger.Log(this, $"Visibility Changed: {Bounds}");
                 }
             }
         }

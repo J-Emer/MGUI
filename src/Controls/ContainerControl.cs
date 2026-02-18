@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MGUI.Controls
 {
-    public class ContainerControl : Control
+    public abstract class ContainerControl : Control
     {
         public UIManager UIManager;
         protected List<Control> Controls = new List<Control>();
@@ -17,12 +17,13 @@ namespace MGUI.Controls
 
 
 
-        public void Add(Control _control)
+        public virtual void Add(Control _control)
         {
             Controls.Add(_control);
+            Logger.Log(this, $"Added Child: {_control.Name}");
             AfterDirty();
         }
-        public void Remove(Control _control)
+        public virtual void Remove(Control _control)
         {
             Controls.Remove(_control);
             AfterDirty();            
