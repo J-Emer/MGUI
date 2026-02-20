@@ -1,4 +1,5 @@
 ﻿using System;
+using MGUI.Controls;
 using MGUI.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -40,12 +41,22 @@ public class Game1 : Game
 
         AssetLoader.Init(_graphics.GraphicsDevice, Content.Load<SpriteFont>("font"));
     
+        new UIManager(_graphics.GraphicsDevice, this.Window);
+
+        UIManager.Instance.Add(new Button
+        {
+            Position = new Point(100, 100),
+            Size = new Point(150, 30),
+            OnClick = ButtonClick
+        });
 
 
 
+    }
 
-
-
+    private void ButtonClick(Button button, MouseEvent @event)
+    {
+        Logger.Log(this, @event.ToString());
     }
     protected override void Update(GameTime gameTime)
     {
