@@ -48,8 +48,8 @@ namespace MGUI.Controls
             }
         }
         public Rectangle Bounds => _bounds;
-        private Point _position;
-        private Point _size;
+        protected Point _position;
+        protected Point _size;
         private Rectangle _bounds;
         public Color BackgroundColor{get;set;} = Color.White;
         public int BorderThickness{get;set;} = 3;
@@ -101,6 +101,8 @@ namespace MGUI.Controls
         public virtual void OnMouseDown(MouseEvent e){}
         public virtual void OnMouseUp(MouseEvent e){}
         public virtual void OnMouseScroll(MouseEvent e){}
+        public virtual void OnMouseDrag(MouseEvent e){}
+
 
         
     }

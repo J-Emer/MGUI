@@ -54,6 +54,11 @@ namespace MGUI.Util.Helpers
                 {
                     _capturedControl = _hoveredControl;
                     _capturedControl.OnMouseDown(new MouseEvent());
+
+                    if(_hoveredControl is Window)
+                    {
+                        UIManager.Instance.BringToFront((Window)_hoveredControl);
+                    }
                 }
             }
 
@@ -63,7 +68,7 @@ namespace MGUI.Util.Helpers
             if (_capturedControl != null)
             {
                 // If dragging, send move to captured
-                //_capturedControl.OnMouseDrag();
+                _capturedControl.OnMouseDrag(new MouseEvent());
             }
             else if (_hoveredControl != null)
             {

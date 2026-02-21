@@ -50,6 +50,11 @@ public class Game1 : Game
         };
         UIManager.Instance.Add(_testWindow);
 
+        UIManager.Instance.Add(new Window("Other Window")
+        {
+            Position = new Point(600, 500)
+        });
+
 
     }
 

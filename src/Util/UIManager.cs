@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MGUI.Controls;
 using MGUI.Util.Helpers;
 using Microsoft.Xna.Framework;
@@ -13,14 +14,16 @@ namespace MGUI.Util
         private Rectangle Bounds;
         private readonly GraphicsDevice _graphics;
         private readonly SpriteBatch _spriteBatch;
-        public DockManager DockManager;
-        private List<Control> _controls = new List<Control>();
+        public DockManager _dockManager;
+        private List<Window> windows = new List<Window>();
         private MouseInteraction _mouseInteractions;
         private RasterizerState RasterizerState = new RasterizerState
                                                                     {
                                                                         ScissorTestEnable = true,
                                                                     };
-  
+        private bool _showDropTargets = false;
+
+
         public UIManager(GraphicsDevice graphics, GameWindow window)
         {
             _graphics = graphics;
@@ -28,40 +31,78 @@ namespace MGUI.Util
             window.ClientSizeChanged += HandleLayout;
             Bounds = new Rectangle(0, 0, _graphics.Viewport.Width, _graphics.Viewport.Height);
             _mouseInteractions = new MouseInteraction();
+            _dockManager = new DockManager(_graphics.Viewport.Bounds);
 
             Instance = this;
         }
 
+        public void ChildDockChanged()
+        {
+            _dockManager.HandleDock(windows);
+        }
         private void HandleLayout(object sender, EventArgs e)
         {
             Bounds = new Rectangle(0, 0, _graphics.Viewport.Width, _graphics.Viewport.Height);
-            //todo: handle dock here
+            _dockManager.BoundsChanged(Bounds);
+            _dockManager.HandleDock(windows);
         }
-        public void Add(Control _control)
+        public void Add(Window window)
         {
-            _controls.Add(_control);
+            windows.Add(window);
+            ChildDockChanged();
         }
-        public void Remove(Control _control)
+        public void Remove(Window window)
         {
-            _controls.Remove(_control);
+            windows.Remove(window);
         }        
         public void Update(GameTime gameTime)
         {
             InputManager.Update();
-            _mouseInteractions.Update(_controls);
+            _mouseInteractions.Update(windows.ToList<Control>());
         }
-
         public void Draw()
         {
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState);
 
-            for (int i = 0; i < _controls.Count; i++)
+            List<Window> orderedWindows = windows.OrderBy(x => x.ZOrder).ToList();
+
+            for (int i = 0; i < orderedWindows.Count; i++)
             {
-                _controls[i].Draw(_spriteBatch);
+                orderedWindows[i].Draw(_spriteBatch);
             }
-        
+            
+            if(_showDropTargets)
+            {
+                _dockManager.DrawDropTargets(_spriteBatch);            
+            }
+
             _spriteBatch.End();
         }
+        public void BringToFront(Window window)
+        {
+            for (int i = 0; i < windows.Count; i++)
+            {
+                windows[i].ZOrder = 0;
+            }
+
+            window.ZOrder = 1;
+        }
+
+
+
+        public void CheckDock(Window window)
+        {
+            _dockManager.CheckDock(window);
+        }
+        public void ShowDropTargets()
+        {
+            _showDropTargets = true;
+        }
+        public void HideDropTargets()
+        {
+            _showDropTargets = false;
+        }
+
 
     }
 }
