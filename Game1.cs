@@ -46,30 +46,23 @@ public class Game1 : Game
 
         Window _testWindow = new Window("Test Window")
         {
-            Position = new Point(100, 100)
+            Position = new Point(100, 100),
+            Layout = new RowLayout()
         };
         UIManager.Instance.Add(_testWindow);
 
-        Window _otherWindow = new Window("Other Window")
-        {
-            Position = new Point(600, 500),
-            Layout = new StretchLayout()
-        };
-        UIManager.Instance.Add(_otherWindow);
-
-        ListBox _listBox = new ListBox
-        {
-            BorderThickness = 0,
-        };
-        _otherWindow.Children.Add(_listBox);
-
-        for (int i = 0; i < 10; i++)
-        {
-            _listBox.Add($"Item: {i}");
-        }
+        Slider _slider = new Slider(0, 100);
+        _slider.OnValueChanged = ValueChanged;
+        _testWindow.Children.Add(_slider);
 
 
     }
+
+    private void ValueChanged(float obj)
+    {
+        Logger.Log(this, obj.ToString());
+    }
+
 
     private void ItemSelected(ListBoxItem item)
     {
