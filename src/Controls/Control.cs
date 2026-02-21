@@ -100,7 +100,7 @@ namespace MGUI.Controls
         public virtual void OnMouseHover(MouseEvent e){}
         public virtual void OnMouseDown(MouseEvent e){}
         public virtual void OnMouseUp(MouseEvent e){}
-
+        public virtual void OnMouseScroll(MouseEvent e){}
 
         
     }

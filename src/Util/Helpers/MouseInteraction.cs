@@ -82,6 +82,11 @@ namespace MGUI.Util.Helpers
                     _capturedControl = null;
                 }
             }
+
+            if(InputManager.ScrollDelta != 0 && _hoveredControl != null)
+            {
+                _hoveredControl.OnMouseScroll(new MouseEvent());
+            }
         }
     }
 }

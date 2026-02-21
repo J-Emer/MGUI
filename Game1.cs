@@ -43,44 +43,21 @@ public class Game1 : Game
     
         new UIManager(_graphics.GraphicsDevice, this.Window);
 
-        ContainerControl _container = new ContainerControl
+
+        Window _testWindow = new Window("Test Window")
         {
-            Name = "Container",
-            Position = new Point(100, 100),
-            Size = new Point(300, 300)
+            Position = new Point(100, 100)
         };
-
-        for (int i = 0; i < 5; i++)
-        {
-            _container.Children.Add(new Button
-            {
-                Name = $"Button: {i}",
-                Text = $"Button: {i}",
-                OnClick = ButtonClick
-            });
-        }
-
-        UIManager.Instance.Add(_container);
-
-
-        for (int i = 0; i < 5; i++)
-        {
-            UIManager.Instance.Add(new Button
-            {
-                Name = $"Test Button {i}",
-                Text = $"Test Button {i}",
-                Position = new Point(500, 100 + (i * 30)),
-                OnClick = ButtonClick
-            });            
-        }
+        UIManager.Instance.Add(_testWindow);
 
 
     }
 
-    private void ButtonClick(Button button, MouseEvent @event)
+    private void ItemSelected(ListBoxItem item)
     {
-        Logger.Log(this, button.Text);
+        Logger.Log(item.Text);
     }
+
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))

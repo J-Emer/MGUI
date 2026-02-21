@@ -16,11 +16,11 @@ namespace MGUI.Util
         public DockManager DockManager;
         private List<Control> _controls = new List<Control>();
         private MouseInteraction _mouseInteractions;
-
-        private Control _capturedControl;
-
-
-
+        private RasterizerState RasterizerState = new RasterizerState
+                                                                    {
+                                                                        ScissorTestEnable = true,
+                                                                    };
+  
         public UIManager(GraphicsDevice graphics, GameWindow window)
         {
             _graphics = graphics;
@@ -53,7 +53,7 @@ namespace MGUI.Util
 
         public void Draw()
         {
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState);
 
             for (int i = 0; i < _controls.Count; i++)
             {
