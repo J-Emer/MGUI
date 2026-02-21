@@ -50,10 +50,23 @@ public class Game1 : Game
         };
         UIManager.Instance.Add(_testWindow);
 
-        UIManager.Instance.Add(new Window("Other Window")
+        Window _otherWindow = new Window("Other Window")
         {
-            Position = new Point(600, 500)
-        });
+            Position = new Point(600, 500),
+            Layout = new StretchLayout()
+        };
+        UIManager.Instance.Add(_otherWindow);
+
+        ListBox _listBox = new ListBox
+        {
+            BorderThickness = 0,
+        };
+        _otherWindow.Children.Add(_listBox);
+
+        for (int i = 0; i < 10; i++)
+        {
+            _listBox.Add($"Item: {i}");
+        }
 
 
     }

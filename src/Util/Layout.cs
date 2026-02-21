@@ -9,7 +9,6 @@ namespace MGUI.Util
     {
         public abstract void HandleLayout(Rectangle bounds, List<Control> controls, int padding);
     }
-
     public class RowLayout : Layout
     {
         public override void HandleLayout(Rectangle bounds, List<Control> controls, int padding)
@@ -27,7 +26,6 @@ namespace MGUI.Util
             }
         }
     }
-
     public class ColumnLayout : Layout
     {
         public override void HandleLayout(Rectangle bounds, List<Control> controls, int padding)
@@ -44,7 +42,6 @@ namespace MGUI.Util
             }
         }
     }
-
     public class GridLayout : Layout
     {
         public int Columns { get; set; } = 2;
@@ -79,10 +76,7 @@ namespace MGUI.Util
             }
         }
     }
-
-
     public enum StackDirection { Vertical, Horizontal }
-
     public class StackLayout : Layout
     {
         public StackDirection Direction { get; set; } = StackDirection.Vertical;
@@ -111,8 +105,21 @@ namespace MGUI.Util
             }
         }
     }
+    public class StretchLayout : Layout
+    {
+        public override void HandleLayout(Rectangle bounds, List<Control> controls, int padding)
+        {
+            Control _control = controls[0];
 
+            int x = bounds.X + padding;
+            int y = bounds.Y + padding;
+            int width = bounds.Width - (padding * 2);
+            int height = bounds.Height - (padding * 2);
 
+            _control.Position = new Point(x, y);
+            _control.Size = new Point(width, height);
+        }
+    }
 
 
 }
