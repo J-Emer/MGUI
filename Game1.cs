@@ -43,20 +43,43 @@ public class Game1 : Game
     
         new UIManager(_graphics.GraphicsDevice, this.Window);
 
-        UIManager.Instance.Add(new Button
+        ContainerControl _container = new ContainerControl
         {
+            Name = "Container",
             Position = new Point(100, 100),
-            Size = new Point(150, 30),
-            OnClick = ButtonClick
-        });
+            Size = new Point(300, 300)
+        };
 
+        for (int i = 0; i < 5; i++)
+        {
+            _container.Children.Add(new Button
+            {
+                Name = $"Button: {i}",
+                Text = $"Button: {i}",
+                OnClick = ButtonClick
+            });
+        }
+
+        UIManager.Instance.Add(_container);
+
+
+        for (int i = 0; i < 5; i++)
+        {
+            UIManager.Instance.Add(new Button
+            {
+                Name = $"Test Button {i}",
+                Text = $"Test Button {i}",
+                Position = new Point(500, 100 + (i * 30)),
+                OnClick = ButtonClick
+            });            
+        }
 
 
     }
 
     private void ButtonClick(Button button, MouseEvent @event)
     {
-        Logger.Log(this, @event.ToString());
+        Logger.Log(this, button.Text);
     }
     protected override void Update(GameTime gameTime)
     {

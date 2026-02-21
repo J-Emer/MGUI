@@ -15,21 +15,28 @@ namespace MGUI.Util.Helpers
             Point mousePos = InputManager.MousePosition;
 
             // --------------------------------------------------
-            // 1️⃣ Find Hovered Control (top-most first)
+            // Find Hovered Control (top-most first)
             // --------------------------------------------------
             Control newHovered = null;
 
             foreach (var control in controls.OrderByDescending(c => c.ZOrder))
             {
-                if (control.Bounds.Contains(mousePos))
+                var hit = control.HitTest(mousePos);
+
+                if(hit != null)
                 {
-                    newHovered = control;
+                    newHovered = hit;
                     break;
                 }
             }
 
+            // if(newHovered != null)
+            // {
+            //     Logger.Log(this, "Have a hovered");
+            // }
+
             // --------------------------------------------------
-            // 2️⃣ Handle Hover Enter / Exit
+            // Handle Hover Enter / Exit
             // --------------------------------------------------
             if (newHovered != _hoveredControl)
             {
@@ -39,7 +46,7 @@ namespace MGUI.Util.Helpers
             }
 
             // --------------------------------------------------
-            // 3️⃣ Mouse Down (Capture)
+            // Mouse Down (Capture)
             // --------------------------------------------------
             if (InputManager.LeftPressed)
             {
@@ -51,7 +58,7 @@ namespace MGUI.Util.Helpers
             }
 
             // --------------------------------------------------
-            // 4️⃣ Mouse Move
+            // Mouse Move
             // --------------------------------------------------
             if (_capturedControl != null)
             {
@@ -65,7 +72,7 @@ namespace MGUI.Util.Helpers
             }
 
             // --------------------------------------------------
-            // 5️⃣ Mouse Up (Release Capture)
+            // Mouse Up (Release Capture)
             // --------------------------------------------------
             if (InputManager.LeftReleased)
             {

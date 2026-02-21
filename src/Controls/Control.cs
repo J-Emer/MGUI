@@ -7,6 +7,8 @@ namespace MGUI.Controls
 {
     public abstract class Control
     {
+        public string Name{get;set;} = "Control";
+        public object UserData{get;set;} = null;
         public int ZOrder{get;set;} = 0;
         public bool IsActive
         {
