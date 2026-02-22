@@ -85,6 +85,10 @@ namespace MGUI.Controls
         }
         public override void OnMouseDown(MouseEvent e)
         {
+            HandlePanel();
+        }        
+        private void HandlePanel()
+        {
             _showPanel = !_showPanel;
             _panel.IsActive = _showPanel;
 
@@ -95,9 +99,8 @@ namespace MGUI.Controls
             else
             {
                 UIManager.Instance.RemoveOverlay(_panel);
-            }
-        }        
-    
+            }            
+        }
     
     
         public void Add(string text)
@@ -118,10 +121,31 @@ namespace MGUI.Controls
             AfterDirty();
         }
 
+        public void Add(string text, object userdata)
+        {
+            if(_panel.Children.Controls.Count == 0)
+            {
+                Text = text;
+            }
+
+            _panel.Children.Add(new Button
+            {
+                Text = text,
+                UserData = userdata,
+                NormalColor = Color.Transparent,
+                BorderThickness = 0,
+                OnClick = ItemSelected
+            });
+
+            AfterDirty();
+        }        
+
         private void ItemSelected(Button button, MouseEvent @event)
         {
             Selected = button.Text;
             OnSelected?.Invoke(Selected);
+            Text = Selected;
+            HandlePanel();
         }
     }
 }

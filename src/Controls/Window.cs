@@ -61,7 +61,6 @@ namespace MGUI.Controls
 
             Logger.Log(this, "//todo: Add a MinSize check");
         }
-
         private void CloseBtnClicked(Button button, MouseEvent @event)
         {
             UIManager.Instance.Remove(this);
