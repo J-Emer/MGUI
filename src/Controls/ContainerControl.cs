@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MGUI.Controls
 {
-    public class ContainerControl : Control
+    public abstract class ContainerControl : Control
     {
         public ControlCollection Children{get; private set;} = new ControlCollection();
         public Layout Layout{get;set;} = new RowLayout();
@@ -22,6 +22,8 @@ namespace MGUI.Controls
         }
         public override Control HitTest(Point p)
         {
+            if(!IsActive){return null;}
+
             for (int i = 0; i < Children.Controls.Count; i++)
             {
                 var hit = Children.Controls[i].HitTest(p);

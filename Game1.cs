@@ -52,22 +52,27 @@ public class Game1 : Game
         UIManager.Instance.Add(_testWindow);
 
         Slider _slider = new Slider(0, 100);
-        _slider.OnValueChanged = ValueChanged;
+
         _testWindow.Children.Add(_slider);
 
+        DropDown _dropDown = new DropDown();
+
+        for (int i = 0; i < 5; i++)
+        {
+            _dropDown.Add($"Item: {i}");
+        }
+
+        _testWindow.Children.Add(_dropDown);
+
+
+        _testWindow.Children.Add(new Button
+        {
+            Text = "Test Button",
+        });
+
 
     }
 
-    private void ValueChanged(float obj)
-    {
-        Logger.Log(this, obj.ToString());
-    }
-
-
-    private void ItemSelected(ListBoxItem item)
-    {
-        Logger.Log(item.Text);
-    }
 
     protected override void Update(GameTime gameTime)
     {

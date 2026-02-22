@@ -23,6 +23,12 @@ namespace MGUI.Util
                                                                     };
         private bool _showDropTargets = false;
 
+        private List<ContainerControl> _overlayPanels = new List<ContainerControl>();
+
+
+
+
+
 
         public UIManager(GraphicsDevice graphics, GameWindow window)
         {
@@ -71,6 +77,11 @@ namespace MGUI.Util
                 orderedWindows[i].Draw(_spriteBatch);
             }
             
+            for (int i = 0; i < _overlayPanels.Count; i++)
+            {
+                _overlayPanels[i].Draw(_spriteBatch);
+            }
+
             if(_showDropTargets)
             {
                 _dockManager.DrawDropTargets(_spriteBatch);            
@@ -102,6 +113,18 @@ namespace MGUI.Util
         {
             _showDropTargets = false;
         }
+
+
+        public void ShowOverlay(ContainerControl _control)
+        {
+            _overlayPanels.Add(_control);
+        }
+        public void RemoveOverlay(ContainerControl _control)
+        {
+            _overlayPanels.Remove(_control);
+        }
+
+
 
 
     }

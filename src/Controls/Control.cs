@@ -22,7 +22,7 @@ namespace MGUI.Controls
                 }
             }
         }
-        private bool _isactive;
+        private bool _isactive = true;
         public Point Position
         {
             get => _position;
