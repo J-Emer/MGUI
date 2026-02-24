@@ -65,7 +65,7 @@ namespace MGUI.Util.Helpers
                 spriteBatch.Draw(AssetLoader.Pixel, target.Value, Color.Yellow * 0.5f);
             }
         }
-        public void CheckDock(Window _window)
+        public void CheckDock(DockableControl _window)
         {
             foreach (var item in dropTargets)
             {
@@ -77,7 +77,7 @@ namespace MGUI.Util.Helpers
             }
         }
 
-        public void HandleDock(List<Window> windows)
+        public void HandleDock(List<DockableControl> windows)
         {
             if (windows == null || windows.Count == 0)
                 return;

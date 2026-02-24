@@ -1,11 +1,12 @@
 using System;
+using System.Linq;
 using MGUI.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MGUI.Controls
 {
-    public class Window : ContainerControl
+    public class Window : DockableControl
     {
         public int HeaderHeight{get;set;} = 30;
         public SpriteFont Font{get;set;} = AssetLoader.DefaultFont;
@@ -22,21 +23,17 @@ namespace MGUI.Controls
         public int GrabberSize{get;set;} = 30;
         public Color GrabberColor{get;set;} = Color.White * 0.5f;
         public Point MinSize{get;set;} = new Point(400, 300);
-        public DockStyle Dock
-        {
-            get => dock;
-            set
-            {
-                if(dock != value)
-                {
-                    dock = value;
-                    UIManager.Instance.ChildDockChanged();
-                }
-            }
-
-        }
-        private DockStyle dock = DockStyle.None;
         private Button _closeButton;
+
+
+
+        public ControlCollection Children{get; private set;} = new ControlCollection();
+        public Layout Layout{get;set;} = new RowLayout();
+        public int Padding{get;set;} = 5;
+
+
+
+
 
 
 
@@ -59,6 +56,8 @@ namespace MGUI.Controls
             BorderColor = Theme.BorderLight;
             Size = new Point(300, 400);
 
+            Children.OnControlsChanged += AfterDirty;
+
             Logger.Log(this, "//todo: Add a MinSize check");
         }
         private void CloseBtnClicked(Button button, MouseEvent @event)
@@ -67,16 +66,29 @@ namespace MGUI.Controls
         }
         public override Control HitTest(Point p)
         {
-            if(_closeButton.Bounds.Contains(p))
+            if(!IsActive){return null;}
+
+            var hitClose = _closeButton.HitTest(p);
+
+            if(hitClose != null)
             {
                 return _closeButton;
             }
 
-            return base.HitTest(p);
+            for (int i = 0; i < Children.Controls.Count; i++)
+            {
+                var hit = Children.Controls[i].HitTest(p);
+
+                if(hit != null)
+                {
+                    return hit;
+                }
+            }
+            return Bounds.Contains(p)? this : null;
         }
         protected override void AfterDirty()
         {           
-            _headerRect = new Rectangle(Position.X, Position.Y, Size.X, HeaderHeight);
+            _headerRect = new Rectangle(Position.X + BorderThickness, Position.Y + BorderThickness, Size.X - (BorderThickness * 2), HeaderHeight);
             _bodyRect = new Rectangle(
                 Position.X,
                 Position.Y + HeaderHeight,
@@ -107,6 +119,11 @@ namespace MGUI.Controls
             if(Dock == DockStyle.None)
             {
                 spritebatch.Draw(AssetLoader.Pixel, _grabRect, GrabberColor);
+            }
+
+            foreach (var control in Children.Controls.OrderByDescending(c => c.ZOrder))
+            {
+                control.Draw(spritebatch);
             } 
         }
 

@@ -44,35 +44,50 @@ public class Game1 : Game
         new UIManager(_graphics.GraphicsDevice, this.Window);
 
 
-        Window _testWindow = new Window("Test Window")
+        Window _other = new Window("Other")
         {
-            Position = new Point(100, 100),
-            Layout = new RowLayout()
+            Dock = DockStyle.Left
         };
-        UIManager.Instance.Add(_testWindow);
-
-        Slider _slider = new Slider(0, 100);
-
-        _testWindow.Children.Add(_slider);
+        UIManager.Instance.Add(_other);
 
         DropDown _dropDown = new DropDown();
+
 
         for (int i = 0; i < 5; i++)
         {
             _dropDown.Add($"Item: {i}");
         }
 
-        _testWindow.Children.Add(_dropDown);
+        _other.Children.Add(_dropDown);
 
 
-        _testWindow.Children.Add(new Button
+        _other.Children.Add(new Button
         {
-            Text = "Test Button",
+            Text = "Button",
+            OnClick = ButtonClicked
         });
+
+
+
+        Window _window = new Window("Test")
+        {
+            Position = new Point(500, 300),
+            Size = new Point(400, 400),
+            Dock = DockStyle.Fill
+        };
+        UIManager.Instance.Add(_window);
+
+
+
+
 
 
     }
 
+    private void ButtonClicked(Button button, MouseEvent @event)
+    {
+        Logger.Log(this, "button clicked");
+    }
 
     protected override void Update(GameTime gameTime)
     {

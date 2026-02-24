@@ -15,7 +15,7 @@ namespace MGUI.Util
         private readonly GraphicsDevice _graphics;
         private readonly SpriteBatch _spriteBatch;
         public DockManager _dockManager;
-        private List<Window> windows = new List<Window>();
+        private List<DockableControl> windows = new List<DockableControl>();
         private MouseInteraction _mouseInteractions;
         private RasterizerState RasterizerState = new RasterizerState
                                                                     {
@@ -52,12 +52,12 @@ namespace MGUI.Util
             _dockManager.BoundsChanged(Bounds);
             _dockManager.HandleDock(windows);
         }
-        public void Add(Window window)
+        public void Add(DockableControl window)
         {
             windows.Add(window);
             ChildDockChanged();
         }
-        public void Remove(Window window)
+        public void Remove(DockableControl window)
         {
             windows.Remove(window);
         }        
@@ -70,7 +70,7 @@ namespace MGUI.Util
         {
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState);
 
-            List<Window> orderedWindows = windows.OrderBy(x => x.ZOrder).ToList();
+            List<DockableControl> orderedWindows = windows.OrderBy(x => x.ZOrder).ToList();
 
             for (int i = 0; i < orderedWindows.Count; i++)
             {
@@ -101,7 +101,7 @@ namespace MGUI.Util
 
 
 
-        public void CheckDock(Window window)
+        public void CheckDock(DockableControl window)
         {
             _dockManager.CheckDock(window);
         }
