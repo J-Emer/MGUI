@@ -9,6 +9,16 @@ namespace MGUI.Util.Helpers
     {
         private Control _hoveredControl;
         private Control _capturedControl;
+        private Control _previousCapturedControl;
+
+        private KeyBoardInteraction _keyBoardInteraction;
+
+
+        public MouseInteraction(KeyBoardInteraction _keyboard)
+        {
+            _keyBoardInteraction = _keyboard;
+        }
+
 
         public void Update(List<Control> controls)
         {
@@ -52,7 +62,16 @@ namespace MGUI.Util.Helpers
             {
                 if (_hoveredControl != null)
                 {
+                    _previousCapturedControl = _capturedControl;
+                    if(_previousCapturedControl != null)
+                    {
+                        _previousCapturedControl.IsActive = false;                    
+                    }
+
                     _capturedControl = _hoveredControl;
+                    _capturedControl.IsActive = true;
+
+                    _keyBoardInteraction.SetCapturedControl(_capturedControl);
                     _capturedControl.OnMouseDown(new MouseEvent());
 
                     if(_hoveredControl is Window)

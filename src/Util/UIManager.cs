@@ -18,6 +18,7 @@ namespace MGUI.Util
         public DockManager _dockManager;
         private List<DockableControl> windows = new List<DockableControl>();
         private MouseInteraction _mouseInteractions;
+        private KeyBoardInteraction _keyBoardInteraction;
         private RasterizerState RasterizerState = new RasterizerState
                                                                     {
                                                                         ScissorTestEnable = true,
@@ -37,7 +38,8 @@ namespace MGUI.Util
             _spriteBatch = new SpriteBatch(_graphics);
             window.ClientSizeChanged += HandleLayout;
             Bounds = new Rectangle(0, 0, _graphics.Viewport.Width, _graphics.Viewport.Height);
-            _mouseInteractions = new MouseInteraction();
+            _keyBoardInteraction = new KeyBoardInteraction();
+            _mouseInteractions = new MouseInteraction(_keyBoardInteraction);
             _dockManager = new DockManager(_graphics.Viewport.Bounds);
 
             Instance = this;
@@ -66,15 +68,8 @@ namespace MGUI.Util
         {
             InputManager.Update();
             _mouseInteractions.Update(windows.ToList<Control>());
+            _keyBoardInteraction.Update();
 
-
-            foreach (Keys key in Enum.GetValues(typeof(Keys)))
-            {
-                if(InputManager.GetKeyDown(key))
-                {
-                    Logger.Log(this, key);
-                }
-            }
         }
         public void Draw()
         {

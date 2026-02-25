@@ -44,21 +44,18 @@ public class Game1 : Game
     
         new UIManager(_graphics.GraphicsDevice, this.Window);
 
-        ColorPicker _colorPicker = new ColorPicker();
-        UIManager.Instance.Add(_colorPicker);
-
-        _colorPicker.SetColor(new Color(155, 155, 155));
-
         Window _test = new Window("Test")
         {
             Position = new Point(100, 100)
         };
         UIManager.Instance.Add(_test);
 
-        _test.Children.Add(new Slider(0, 255)
-        {
-            OnValueChanged = ValueChanged
-        });
+
+
+        _test.Children.Add(new TextBox());
+
+
+
 
     }
 

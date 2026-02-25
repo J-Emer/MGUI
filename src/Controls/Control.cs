@@ -2,6 +2,7 @@ using System;
 using MGUI.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace MGUI.Controls
 {
@@ -102,6 +103,14 @@ namespace MGUI.Controls
         public virtual void OnMouseUp(MouseEvent e){}
         public virtual void OnMouseScroll(MouseEvent e){}
         public virtual void OnMouseDrag(MouseEvent e){}
+
+
+
+
+        public virtual void OnKeyDown(Keys key){}
+        public virtual void OnKeyUp(Keys key){}
+        public virtual void OnKeyHeld(Keys key){}
+
 
 
         
