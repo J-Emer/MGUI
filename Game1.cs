@@ -44,6 +44,25 @@ public class Game1 : Game
         new UIManager(_graphics.GraphicsDevice, this.Window);
 
 
+        Menu _menu = new Menu();
+
+        for (int i = 0; i < 5; i++)
+        {
+            _menu.Add($"Item: {i}");
+        }
+
+        DropDownMenuItem _dropDownItem = _menu.AddDropDownItem("Drop");
+
+        for (int i = 0; i < 5; i++)
+        {
+            _dropDownItem.Add($"Drop Item: {i}");
+        }
+
+
+        UIManager.Instance.Add(_menu);
+
+
+
         Window _other = new Window("Other")
         {
             Dock = DockStyle.Left
@@ -73,7 +92,7 @@ public class Game1 : Game
         {
             Position = new Point(500, 300),
             Size = new Point(400, 400),
-            Dock = DockStyle.Fill
+            Dock = DockStyle.Right
         };
         UIManager.Instance.Add(_window);
 
