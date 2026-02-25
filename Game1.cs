@@ -96,7 +96,13 @@ public class Game1 : Game
         };
         UIManager.Instance.Add(_window);
 
-
+        for (int i = 0; i < 5; i++)
+        {
+            _window.Children.Add(new Label
+            {
+                Text = $"This is a label: {i}"
+            });            
+        }
 
 
 
