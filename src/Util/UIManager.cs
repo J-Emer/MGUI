@@ -5,6 +5,7 @@ using MGUI.Controls;
 using MGUI.Util.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace MGUI.Util
 {
@@ -65,6 +66,15 @@ namespace MGUI.Util
         {
             InputManager.Update();
             _mouseInteractions.Update(windows.ToList<Control>());
+
+
+            foreach (Keys key in Enum.GetValues(typeof(Keys)))
+            {
+                if(InputManager.GetKeyDown(key))
+                {
+                    Logger.Log(this, key);
+                }
+            }
         }
         public void Draw()
         {

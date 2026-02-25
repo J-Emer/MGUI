@@ -9,12 +9,21 @@ namespace MGUI.Util
         private static MouseState _currentMouse;
         private static MouseState _previousMouse;
 
-        private static Control _mouseCapture; //---this is the control that currently has the mouse
+
+        private static KeyboardState _previousKeys;
+        private static KeyboardState _currentKeys;
+
+
+
+
 
         public static void Update()
         {
             _previousMouse = _currentMouse;
             _currentMouse = Mouse.GetState();
+
+            _previousKeys = _currentKeys;
+            _currentKeys = Keyboard.GetState();
         }
 
         public static Point MousePosition => new Point(_currentMouse.X, _currentMouse.Y);
@@ -27,21 +36,32 @@ namespace MGUI.Util
 
         public static int ScrollDelta => _currentMouse.ScrollWheelValue - _previousMouse.ScrollWheelValue;
 
-        // -------------------------
-        // Mouse Capture
-        // -------------------------
 
-        public static void CaptureMouse(Control control)
-        {
-            _mouseCapture = control;
-        }
 
-        public static void ReleaseMouse(Control control)
-        {
-            if (_mouseCapture == control)
-                _mouseCapture = null;
-        }
 
-        public static Control CapturedControl => _mouseCapture;
+
+        /// <summary>
+        /// Checks if a key is being continously held down
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>bool</returns>
+        public static bool GetKey(Keys key) => _currentKeys.IsKeyDown(key);
+        
+        /// <summary>
+        /// Checks if a key was pressed this frame
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>bool</returns>
+        public static bool GetKeyDown(Keys key) => _currentKeys.IsKeyDown(key) && !_previousKeys.IsKeyDown(key);
+        
+        /// <summary>
+        /// Checks if a key was released this frame
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static bool GetKeyUp(Keys key) => _currentKeys.IsKeyUp(key) && _previousKeys.IsKeyDown(key);
+
+
+
     }
 }
