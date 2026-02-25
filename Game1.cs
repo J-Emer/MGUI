@@ -1,6 +1,7 @@
 ﻿using System;
 using MGUI.Controls;
 using MGUI.Util;
+using MGUI.Widgets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -43,71 +44,29 @@ public class Game1 : Game
     
         new UIManager(_graphics.GraphicsDevice, this.Window);
 
+        ColorPicker _colorPicker = new ColorPicker();
+        UIManager.Instance.Add(_colorPicker);
 
-        Menu _menu = new Menu();
+        _colorPicker.SetColor(new Color(155, 155, 155));
 
-        for (int i = 0; i < 5; i++)
+        Window _test = new Window("Test")
         {
-            _menu.Add($"Item: {i}");
-        }
-
-        DropDownMenuItem _dropDownItem = _menu.AddDropDownItem("Drop");
-
-        for (int i = 0; i < 5; i++)
-        {
-            _dropDownItem.Add($"Drop Item: {i}");
-        }
-
-
-        UIManager.Instance.Add(_menu);
-
-
-
-        Window _other = new Window("Other")
-        {
-            Dock = DockStyle.Left
+            Position = new Point(100, 100)
         };
-        UIManager.Instance.Add(_other);
+        UIManager.Instance.Add(_test);
 
-        DropDown _dropDown = new DropDown();
-
-
-        for (int i = 0; i < 5; i++)
+        _test.Children.Add(new Slider(0, 255)
         {
-            _dropDown.Add($"Item: {i}");
-        }
-
-        _other.Children.Add(_dropDown);
-
-
-        _other.Children.Add(new Button
-        {
-            Text = "Button",
-            OnClick = ButtonClicked
+            OnValueChanged = ValueChanged
         });
 
-
-
-        Window _window = new Window("Test")
-        {
-            Position = new Point(500, 300),
-            Size = new Point(400, 400),
-            Dock = DockStyle.Right
-        };
-        UIManager.Instance.Add(_window);
-
-        for (int i = 0; i < 5; i++)
-        {
-            _window.Children.Add(new Label
-            {
-                Text = $"This is a label: {i}"
-            });            
-        }
-
-
-
-
     }
+
+    private void ValueChanged(float obj)
+    {
+        Logger.Log(this, obj);
+    }
+
 
     private void ButtonClicked(Button button, MouseEvent @event)
     {

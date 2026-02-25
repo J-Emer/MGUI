@@ -64,6 +64,11 @@ namespace MGUI.Controls
                 Position.Y,
                 _thumbWidth,
                 Size.Y);
+
+        }
+        public void SetValue(int value)
+        {
+            _value = value;
         }
         public override void Draw(SpriteBatch spritebatch)
         {
