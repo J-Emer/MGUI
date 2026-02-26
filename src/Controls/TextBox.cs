@@ -53,6 +53,8 @@ namespace MGUI.Controls
         {
             base.Draw(spritebatch);
 
+            ScissorStack.Push(Bounds);
+
             spritebatch.DrawString(Font, Text, _textPos.ToVector2(), FontColor); 
 
             _timer += 1;
@@ -67,6 +69,8 @@ namespace MGUI.Controls
             {
                 DrawCaret(spritebatch);            
             }
+
+            ScissorStack.Pop();
         }
         private void DrawCaret(SpriteBatch spriteBatch)
         {

@@ -51,33 +51,14 @@ public class Game1 : Game
         UIManager.Instance.Add(_test);
 
 
-        TextBox _textBox = new TextBox
+
+        _test.Children.Add(new Label
         {
-            Text = "this is a text box",
-            OnTextCompleted = TextCompleted
-        };
-        _test.Children.Add(_textBox);
+            Text = "abcdefghijklmnopqrstuvwxyz"
+        });
 
 
 
-
-    }
-
-    private void TextCompleted(string obj)
-    {
-        Logger.Log(this, $"OnTextCompleted: {obj}");
-    }
-
-
-    private void ValueChanged(float obj)
-    {
-        Logger.Log(this, obj);
-    }
-
-
-    private void ButtonClicked(Button button, MouseEvent @event)
-    {
-        Logger.Log(this, "button clicked");
     }
 
     protected override void Update(GameTime gameTime)

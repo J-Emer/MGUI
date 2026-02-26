@@ -112,6 +112,8 @@ namespace MGUI.Controls
         }
         public override void Draw(SpriteBatch spritebatch)
         {           
+            ScissorStack.Push(Bounds);
+
             base.Draw(spritebatch);
             spritebatch.Draw(AssetLoader.Pixel, _headerRect, HeaderColor);
             spritebatch.DrawString(Font, HeaderText, _textPos, FontColor);
@@ -124,7 +126,9 @@ namespace MGUI.Controls
             foreach (var control in Children.Controls.OrderByDescending(c => c.ZOrder))
             {
                 control.Draw(spritebatch);
-            } 
+            }
+
+            ScissorStack.Pop(); 
         }
 
 

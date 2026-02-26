@@ -13,6 +13,7 @@ namespace MGUI.Util
     {
         public static UIManager Instance{get; private set;}
         private Rectangle Bounds;
+        public GraphicsDevice Graphics => _graphics;
         private readonly GraphicsDevice _graphics;
         private readonly SpriteBatch _spriteBatch;
         public DockManager _dockManager;
@@ -74,6 +75,8 @@ namespace MGUI.Util
         public void Draw()
         {
             _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState);
+
+            Graphics.ScissorRectangle = Bounds;
 
             List<DockableControl> orderedWindows = windows.OrderBy(x => x.ZOrder).ToList();
 
