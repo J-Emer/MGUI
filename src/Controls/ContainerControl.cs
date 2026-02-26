@@ -39,10 +39,14 @@ namespace MGUI.Controls
         {
             base.Draw(spritebatch);
 
+            ScissorStack.Push(Bounds);
+
             foreach (var control in Children.Controls.OrderByDescending(c => c.ZOrder))
             {
                 control.Draw(spritebatch);
             }
+
+            ScissorStack.Pop();
         }
     }
 }
