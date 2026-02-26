@@ -61,6 +61,10 @@ namespace MGUI.Util
         /// <returns></returns>
         public static bool GetKeyUp(Keys key) => _currentKeys.IsKeyUp(key) && _previousKeys.IsKeyDown(key);
 
+        public static bool GetShift()
+        {
+            return GetKey(Keys.LeftShift) || GetKey(Keys.RightShift);
+        }
 
 
     }

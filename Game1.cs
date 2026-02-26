@@ -51,13 +51,23 @@ public class Game1 : Game
         UIManager.Instance.Add(_test);
 
 
-
-        _test.Children.Add(new TextBox());
+        TextBox _textBox = new TextBox
+        {
+            Text = "this is a text box",
+            OnTextCompleted = TextCompleted
+        };
+        _test.Children.Add(_textBox);
 
 
 
 
     }
+
+    private void TextCompleted(string obj)
+    {
+        Logger.Log(this, $"OnTextCompleted: {obj}");
+    }
+
 
     private void ValueChanged(float obj)
     {
