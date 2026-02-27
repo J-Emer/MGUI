@@ -15,9 +15,7 @@ namespace MGUI.Controls
             set
             {
                 _text = value ?? string.Empty;
-                _caretIndex = Math.Min(_caretIndex, _text.Length);
-                _caretIndex = _text.Length;
-
+                // _caretIndex = Math.Min(_caretIndex, _text.Length);
                 AfterDirty();
             }
         }
@@ -40,10 +38,17 @@ namespace MGUI.Controls
 
         public TextBox() : base()
         {
+            IsActive = false;
             BorderColor = Theme.BorderLight;
             BorderThickness = 1;
             BackgroundColor = Theme.Background;
             Size = new Point(150, 25);
+        }
+
+
+        protected override void ActiveChanged()
+        {
+            _showCaret = IsActive;
         }
         protected override void AfterDirty()
         {
@@ -74,7 +79,9 @@ namespace MGUI.Controls
         }
         private void DrawCaret(SpriteBatch spriteBatch)
         {
-            string leftText = _caretIndex > 0 ? Text.Substring(0, _caretIndex) : string.Empty;
+            int safeCaret = Math.Clamp(_caretIndex, 0, Text.Length);
+
+            string leftText = safeCaret > 0 ? Text.Substring(0, safeCaret) : string.Empty;
 
             float caretX = _textPos.X + Font.MeasureString(leftText).X;
 
@@ -92,8 +99,6 @@ namespace MGUI.Controls
         public override void OnKeyDown(Keys key)
         {
             if(!IsActive){return;}
-
-            // _caretIndex = _text.Length;
 
             bool shiftDown = InputManager.GetShift();
 
@@ -115,8 +120,6 @@ namespace MGUI.Controls
                 AfterDirty();
             }            
         }
-
-
 
         //----------------------Key Helpers---------------------------//
 
@@ -222,6 +225,7 @@ namespace MGUI.Controls
         }     
         private void HandleTextFinished()
         {
+            IsActive = false;
             OnTextCompleted?.Invoke(Text);
         }   
     

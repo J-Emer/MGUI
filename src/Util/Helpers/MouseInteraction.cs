@@ -65,14 +65,15 @@ namespace MGUI.Util.Helpers
                     _previousCapturedControl = _capturedControl;
                     if(_previousCapturedControl != null)
                     {
-                        _previousCapturedControl.IsActive = false;                    
+                        _previousCapturedControl.IsActive = false;
+                        //note: this is not getting set               
                     }
 
                     _capturedControl = _hoveredControl;
-                    _capturedControl.IsActive = true;
-
                     _keyBoardInteraction.SetCapturedControl(_capturedControl);
                     _capturedControl.OnMouseDown(new MouseEvent());
+                    _capturedControl.IsActive = true;
+
 
                     if(_hoveredControl is Window)
                     {

@@ -52,10 +52,7 @@ public class Game1 : Game
 
 
 
-        _test.Children.Add(new Label
-        {
-            Text = "abcdefghijklmnopqrstuvwxyz"
-        });
+        _test.Children.Add(new TextBox());
 
 
 

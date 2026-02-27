@@ -19,6 +19,7 @@ namespace MGUI.Controls
                 if(_isactive != value)
                 {
                     _isactive = value;
+                    ActiveChanged();
                     OnActiveChanged?.Invoke();
                 }
             }
@@ -94,7 +95,7 @@ namespace MGUI.Controls
         }
 
 
-
+        protected virtual void ActiveChanged(){}
         protected virtual void AfterDirty(){}
         public virtual void OnMouseEnter(MouseEvent e){}
         public virtual void OnMouseExit(MouseEvent e){}
@@ -113,6 +114,9 @@ namespace MGUI.Controls
 
 
 
-        
+        public override string ToString()
+        {
+            return $"Type: {GetType().Name} | Name: {Name} | Bounds: {Bounds}";
+        }
     }
 }
