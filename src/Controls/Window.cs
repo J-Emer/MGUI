@@ -118,15 +118,17 @@ namespace MGUI.Controls
             spritebatch.Draw(AssetLoader.Pixel, _headerRect, HeaderColor);
             spritebatch.DrawString(Font, HeaderText, _textPos, FontColor);
             _closeButton.Draw(spritebatch);
-            if(Dock == DockStyle.None)
-            {
-                spritebatch.Draw(AssetLoader.Pixel, _grabRect, GrabberColor);
-            }
 
             foreach (var control in Children.Controls.OrderByDescending(c => c.ZOrder))
             {
                 control.Draw(spritebatch);
             }
+
+            if(Dock == DockStyle.None)
+            {
+                spritebatch.Draw(AssetLoader.Pixel, _grabRect, GrabberColor);
+            }
+
 
             ScissorStack.Pop(); 
         }

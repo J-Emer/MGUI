@@ -79,6 +79,8 @@ namespace MGUI.Controls
         }
         public virtual void Draw(SpriteBatch spritebatch)
         {
+            if(!IsActive){return;}
+            
             spritebatch.Draw(AssetLoader.Pixel, _bounds, BackgroundColor);
 
             if(BorderThickness > 0)

@@ -34,8 +34,6 @@ namespace MGUI.Controls
 
 
 
-
-
         public TextBox() : base()
         {
             IsActive = false;

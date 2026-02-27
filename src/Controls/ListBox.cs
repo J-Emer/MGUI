@@ -11,16 +11,24 @@ namespace MGUI.Controls
         public ControlCollection<ListBoxItem> Items{get; private set;} = new ControlCollection<ListBoxItem>();
         private Layout _layout = new RowLayout();
         private int _padding = 0;
-
+        private Rectangle _scrollRect = new Rectangle();
 
         public ListBoxItem SelectedItem{get; private set;}
         public Action<ListBoxItem> OnItemSelected;
+
+
+        private int _scrollOffset = 0;
+        private int _maxScroll = 0;
+        private int _scrollSpeed = 20;
+
 
 
         public ListBox() : base()
         {
             BackgroundColor = Theme.Background;
             Items.OnControlsChanged += AfterDirty;
+
+            Size = new Point(200, 200);
         }
         public void Add(string text)
         {
@@ -48,11 +56,42 @@ namespace MGUI.Controls
         }             
         protected override void AfterDirty()
         {
-            _layout.HandleLayout(Bounds, Items.Controls.ToList<Control>(), _padding);   
+            int visibleHeight = Bounds.Height;
+            int contentHeight = GetChildrenHeight();
+
+            _maxScroll = Math.Max(0, contentHeight - visibleHeight);
+
+            _scrollOffset = Math.Clamp(_scrollOffset, 0, _maxScroll);
+
+            int width = Bounds.Width - (_padding + _padding);
+
+            _scrollRect = new Rectangle(
+                Position.X,
+                Position.Y - _scrollOffset, 
+                width,
+                contentHeight
+            );
+
+            _layout.HandleLayout(_scrollRect, Items.Controls.ToList<Control>(), _padding);
+
+            foreach (var item in Items.Controls)
+            {
+                item.IsActive = Bounds.Contains(item.Bounds);
+            }
         }
         public override Control HitTest(Point p)
         {
-            for (int i = 0; i < Items.Controls.Count; i++)
+            if(InputManager.ScrollDelta != 0) //if were scrolling then hit check the ListBox first
+            {
+                var hitBounds = Bounds.Contains(p);
+
+                if(hitBounds != false)
+                {
+                    return this;
+                }
+            }
+
+            for (int i = 0; i < Items.Controls.Count; i++) // if not then just hit test normally
             {
                 var hit = Items.Controls[i].HitTest(p);
 
@@ -76,17 +115,29 @@ namespace MGUI.Controls
 
             ScissorStack.Pop();
         }
+        private int GetChildrenHeight()
+        {
+            int height = 0;
 
+            foreach (var item in Items.Controls)
+            {
+                height += item.Size.Y + _padding;
+            }
 
+            return height;
+        }
         public override void OnMouseScroll(MouseEvent e)
         {
-            Logger.Log(this, e.ScrollDelta);
-        }
+            if (!IsActive)
+                return;
 
-    
-    
-    
-    
+            _scrollOffset -= e.ScrollDelta > 0 ? _scrollSpeed : -_scrollSpeed;
+
+            _scrollOffset = Math.Clamp(_scrollOffset, 0, _maxScroll);
+
+            AfterDirty();
+        }
+     
     }
 
 
@@ -130,14 +181,17 @@ namespace MGUI.Controls
         }
         public override void OnMouseEnter(MouseEvent e)
         {
+            if(!IsActive){return;}
             BackgroundColor = HoverColor;
         }        
         public override void OnMouseExit(MouseEvent e)
         {
+            if(!IsActive){return;}
             BackgroundColor = NormalColor;
         }
         public override void OnMouseDown(MouseEvent e)
         {
+            if(!IsActive){return;}
             Callback?.Invoke(this);
         }        
     }
