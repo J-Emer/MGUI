@@ -47,32 +47,17 @@ public class Game1 : Game
         Window _test = new Window("Test")
         {
             Position = new Point(100, 100),
-            Layout = new StretchLayout()
+            Layout = new RowLayout(),
+            Padding = 5
         };
         UIManager.Instance.Add(_test);
 
-
-        ListBox _listBox = new ListBox
-        {
-            BorderThickness = 1,
-            BorderColor = Color.White,
-            BackgroundColor = Color.Orange
-        };
-        for (int i = 0; i < 25; i++)
-        {
-            _listBox.Add($"Item: {i}");
-        }
-        _test.Children.Add(_listBox);
-
-
-        _listBox.OnItemSelected += ItemSelected;
+        NumericTextBox _nTextBox = new NumericTextBox();
+        _test.Children.Add(_nTextBox);
 
     }
 
-    private void ItemSelected(ListBoxItem item)
-    {
-        Logger.Log(this, item.Text);
-    }
+
 
 
     protected override void Update(GameTime gameTime)

@@ -79,7 +79,8 @@ namespace MGUI.Controls
         }
         public virtual void Draw(SpriteBatch spritebatch)
         {
-            if(!IsActive){return;}
+            //todo: add a IsVisible property
+            // if(!IsActive){return;}
             
             spritebatch.Draw(AssetLoader.Pixel, _bounds, BackgroundColor);
 

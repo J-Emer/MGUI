@@ -92,8 +92,6 @@ namespace MGUI.Controls
 
             spriteBatch.Draw(AssetLoader.Pixel, caretRect, FontColor);
         }
-
-
         public override void OnKeyDown(Keys key)
         {
             if(!IsActive){return;}
@@ -221,7 +219,7 @@ namespace MGUI.Controls
         {
             return true;
         }     
-        private void HandleTextFinished()
+        protected virtual void HandleTextFinished()
         {
             IsActive = false;
             OnTextCompleted?.Invoke(Text);
