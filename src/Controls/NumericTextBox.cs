@@ -21,7 +21,6 @@ namespace MGUI.Controls
         }
         protected override bool IsCharAllowed(char c)
         {
-            Logger.Log(this, c);
             return char.IsDigit(c);
         }
         protected override void HandleTextFinished()

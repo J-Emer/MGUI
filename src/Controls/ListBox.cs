@@ -25,6 +25,7 @@ namespace MGUI.Controls
 
         public ListBox() : base()
         {
+            BorderThickness = 0;
             BackgroundColor = Theme.Background;
             Items.OnControlsChanged += AfterDirty;
 
@@ -76,7 +77,14 @@ namespace MGUI.Controls
 
             foreach (var item in Items.Controls)
             {
-                item.IsActive = Bounds.Contains(item.Bounds);
+                if(Bounds.Contains(item.Bounds))
+                {
+                    item.IsActive = true;
+                }
+                else
+                {
+                    item.IsActive = false;
+                }
             }
         }
         public override Control HitTest(Point p)

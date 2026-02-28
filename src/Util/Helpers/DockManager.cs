@@ -76,7 +76,6 @@ namespace MGUI.Util.Helpers
                 }
             }
         }
-
         public void HandleDock(List<DockableControl> windows)
         {
             if (windows == null || windows.Count == 0)

@@ -21,7 +21,7 @@ namespace MGUI.Controls
         private Point _offset = Point.Zero;
         private Rectangle _grabRect = new Rectangle();
         public int GrabberSize{get;set;} = 30;
-        public Color GrabberColor{get;set;} = Color.White * 0.5f;
+        public Color GrabberColor{get;set;} = Color.White * 0.25f;
         public Point MinSize{get;set;} = new Point(400, 300);
         private Button _closeButton;
 

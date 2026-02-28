@@ -223,9 +223,15 @@ namespace MGUI.Controls
         {
             IsActive = false;
             OnTextCompleted?.Invoke(Text);
-        }   
-    
+        }
 
-    
+
+
+        public override void OnMouseDown(MouseEvent e)
+        {
+            IsActive = true;
+        }
+
+
     }
 }

@@ -52,12 +52,27 @@ public class Game1 : Game
         };
         UIManager.Instance.Add(_test);
 
-        NumericTextBox _nTextBox = new NumericTextBox();
-        _test.Children.Add(_nTextBox);
+        _test.Children.Add(new TextBox());
+        _test.Children.Add(new NumericTextBox());
+ 
+        ListBox _listBox = new ListBox
+        {
+            Size = new Point(300, 500)
+        };
+        _listBox.OnItemSelected += ItemSelected;
+
+        for (int i = 0; i < 20; i++)
+        {
+            _listBox.Add($"Item: {i}");
+        }
+        _test.Children.Add(_listBox);
 
     }
 
-
+    private void ItemSelected(ListBoxItem item)
+    {
+        Logger.Log(this, item.Text);
+    }
 
 
     protected override void Update(GameTime gameTime)
