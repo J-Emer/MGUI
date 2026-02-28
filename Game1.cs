@@ -40,9 +40,9 @@ public class Game1 : Game
 
         // TODO: use this.Content to load your game content here
 
-        AssetLoader.Init(_graphics.GraphicsDevice, Content.Load<SpriteFont>("font"));
+        // AssetLoader.Init(_graphics.GraphicsDevice, Content.Load<SpriteFont>("font"));
     
-        new UIManager(_graphics.GraphicsDevice, this.Window);
+        new UIManager(this, "font");
 
         Window _test = new Window("Test")
         {

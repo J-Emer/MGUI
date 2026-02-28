@@ -33,11 +33,14 @@ namespace MGUI.Util
 
 
 
-        public UIManager(GraphicsDevice graphics, GameWindow window)
+        public UIManager(Game game, string defaultFontName)
         {
-            _graphics = graphics;
+            _graphics = game.GraphicsDevice;
+
+            AssetLoader.Init(_graphics, game.Content.Load<SpriteFont>(defaultFontName));
+
             _spriteBatch = new SpriteBatch(_graphics);
-            window.ClientSizeChanged += HandleLayout;
+            game.Window.ClientSizeChanged += HandleLayout;
             Bounds = new Rectangle(0, 0, _graphics.Viewport.Width, _graphics.Viewport.Height);
             _keyBoardInteraction = new KeyBoardInteraction();
             _mouseInteractions = new MouseInteraction(_keyBoardInteraction);
