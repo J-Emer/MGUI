@@ -33,7 +33,7 @@ namespace MGUI.Controls
         public Panel GetPanel(int index)
         {
             if(index > _panels.Count){return null;}
-            return _panels[index];                                                                                                                                                                                                                                                                 return _panels[index];
+            return _panels[index];
         }
         public Panel Add(string text)
         {
