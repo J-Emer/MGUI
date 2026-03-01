@@ -52,20 +52,30 @@ public class Game1 : Game
         };
         UIManager.Instance.Add(_test);
 
-        _test.Children.Add(new TextBox());
-        _test.Children.Add(new NumericTextBox());
- 
-        ListBox _listBox = new ListBox
+        TabControl _tab = new TabControl
         {
-            Size = new Point(300, 500)
+            Size = new Point(300, 400)
         };
-        _listBox.OnItemSelected += ItemSelected;
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 3; i++)
         {
-            _listBox.Add($"Item: {i}");
+            _tab.Add($"Test: {i}");
         }
-        _test.Children.Add(_listBox);
+
+        Panel _panel = _tab.Add("This one");
+        _panel.Layout = new RowLayout();
+        _panel.Padding = 5;
+
+        for (int i = 0; i < 5; i++)
+        {
+            _panel.Children.Add(new Button
+            {
+                Text = $"Button: {i}"
+            });
+        }
+        
+
+        _test.Children.Add(_tab);
 
     }
 

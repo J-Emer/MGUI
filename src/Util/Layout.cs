@@ -122,4 +122,19 @@ namespace MGUI.Util
     }
 
 
+
+    public class HorizontalLayout : Layout
+    {
+        public override void HandleLayout(Rectangle bounds, List<Control> controls, int padding)
+        {
+            int xPos = bounds.X + padding;
+            int yPos = bounds.Y + padding;
+
+            foreach (var item in controls)
+            {
+                item.Position = new Point(xPos, yPos);
+                xPos += item.Size.X + padding;
+            }
+        }
+    }
 }
