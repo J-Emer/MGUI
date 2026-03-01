@@ -44,6 +44,19 @@ public class Game1 : Game
     
         new UIManager(this, "font");
 
+
+
+        Menu _menu = new Menu();
+        UIManager.Instance.Add(_menu);
+
+        DropDownMenuItem _dropDown = _menu.AddDropDown("DropDown");
+
+        for (int i = 0; i < 5; i++)
+        {
+            _dropDown.Add($"Item: {i}");
+        }
+
+
         Window _test = new Window("Test")
         {
             Position = new Point(100, 100),
@@ -52,38 +65,9 @@ public class Game1 : Game
         };
         UIManager.Instance.Add(_test);
 
-        TabControl _tab = new TabControl
-        {
-            Size = new Point(300, 400)
-        };
 
-        for (int i = 0; i < 3; i++)
-        {
-            _tab.Add($"Test: {i}");
-        }
-
-        Panel _panel = _tab.Add("This one");
-        _panel.Layout = new RowLayout();
-        _panel.Padding = 5;
-
-        for (int i = 0; i < 5; i++)
-        {
-            _panel.Children.Add(new Button
-            {
-                Text = $"Button: {i}"
-            });
-        }
-        
-
-        _test.Children.Add(_tab);
 
     }
-
-    private void ItemSelected(ListBoxItem item)
-    {
-        Logger.Log(this, item.Text);
-    }
-
 
     protected override void Update(GameTime gameTime)
     {

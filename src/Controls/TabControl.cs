@@ -23,12 +23,18 @@ namespace MGUI.Controls
         private int ButtonsHeight = 30;
         private int _selected = 0;
 
+
+
         public TabControl() : base()
         {
             BackgroundColor = Color.Transparent;
             BorderThickness = 0;
         }
-
+        public Panel GetPanel(int index)
+        {
+            if(index > _panels.Count){return null;}
+            return _panels[index];                                                                                                                                                                                                                                                                 return _panels[index];
+        }
         public Panel Add(string text)
         {
             _buttons.Add(new Button
@@ -44,27 +50,19 @@ namespace MGUI.Controls
                 BorderThickness = 0
             };
 
-            // _panel.Children.Add(new Label
-            // {
-            //     Text = $"Lable: {text}"
-            // });
-
             _panels.Add(_panel);
 
             AfterDirty();
 
             return _panel;
         }
-
         private void ButtonClicked(Button button, MouseEvent @event)
         {
             _selected = _buttons.IndexOf(button);
             AfterDirty();
         }
-
         public override Control HitTest(Point p)
         {
-
             foreach (var item in _buttons)
             {
                 var hit = item.HitTest(p);

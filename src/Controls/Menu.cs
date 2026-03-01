@@ -12,6 +12,7 @@ namespace MGUI.Controls
         private Layout Layout = new ColumnLayout();
         private int Padding = 5;
         public Action<MenuItem> OnItemClicked;
+        public Action<string> OnDropDownSelected;
         public MenuItem SelectedItem{get; private set;}
 
         public Menu() : base()
@@ -58,15 +59,16 @@ namespace MGUI.Controls
         }
         private void DropDownItemSelected(MenuItem item)
         {
-            Logger.Log(this, "DropDownItemSelected");
+            //note: this method does nothing
         }
-        public void Add(string text)
+        public MenuItem Add(string text)
         {
             MenuItem _item = new MenuItem(text, MenuItemClicked);
             _item.Size = new Point(100, 30);
             Items.Add(_item);
+            return _item;
         }
-        public void Add(string text, object userdata)
+        public MenuItem Add(string text, object userdata)
         {
             MenuItem _item = new MenuItem(text, MenuItemClicked)
             {
@@ -75,17 +77,20 @@ namespace MGUI.Controls
             };
 
             Items.Add(_item);
+            return _item;
         }
-        public DropDownMenuItem AddDropDownItem(string text)
+        public DropDownMenuItem AddDropDown(string text)
         {
             DropDownMenuItem _item = new DropDownMenuItem(text, DropDownItemSelected);
+            _item.OnSelected += DropDownItemSelected;
             _item.Size = new Point(100, 30);
             Items.Add(_item);
             return _item;
         }
-
-
-
+        private void DropDownItemSelected(string obj)
+        {
+            OnDropDownSelected?.Invoke(obj);
+        }
         public void Remove(MenuItem item)
         {
             Items.Remove(item);
@@ -149,9 +154,6 @@ namespace MGUI.Controls
             Callback?.Invoke(this);
         }        
     }
-
-
-
     public class DropDownMenuItem : MenuItem
     {
         private Color _normalColor = Color.Black;
@@ -159,7 +161,6 @@ namespace MGUI.Controls
         private bool _showPanel = false;
         public Action<string> OnSelected;
         public string Selected{get; private set;}
-
 
         public DropDownMenuItem(string text, Action<MenuItem> callback) : base(text, callback)
         {
@@ -237,8 +238,6 @@ namespace MGUI.Controls
                 UIManager.Instance.RemoveOverlay(_panel);
             }            
         }
-    
-    
         public void Add(string text)
         {
             if(_panel.Children.Controls.Count == 0)
