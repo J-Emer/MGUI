@@ -15,5 +15,6 @@ namespace MGUI.Util
         BottomLeft,
         BottomRight
     }
+    public enum TextDirection{Left, Right, Center}
 
 }
