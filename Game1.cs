@@ -46,24 +46,31 @@ public class Game1 : Game
 
 
 
-        Menu _menu = new Menu();
-        UIManager.Instance.Add(_menu);
+        Window _testWindow = new Window("Test Window")
+        {
+            Position = new Point(100, 100),
+            Size = new Point(400, 300),
+            Layout = new RowLayout(),
+            Padding = 5
+        };
 
-        DropDownMenuItem _dropDown = _menu.AddDropDown("DropDown");
+        UIManager.Instance.Add(_testWindow);
 
+
+        Button _button = new Button
+        {
+            Text = "This is a Button"
+        };
+        _testWindow.Children.Add(_button);
+
+        DropDown _dropDown = new DropDown();
         for (int i = 0; i < 5; i++)
         {
             _dropDown.Add($"Item: {i}");
         }
+        _testWindow.Children.Add(_dropDown);
 
 
-        Window _test = new Window("Test")
-        {
-            Position = new Point(100, 100),
-            Layout = new RowLayout(),
-            Padding = 5
-        };
-        UIManager.Instance.Add(_test);
 
 
 
